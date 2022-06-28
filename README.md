@@ -60,7 +60,7 @@ In the file linked above, the following columns can be obtained via a line of py
 | --- | --- | --- |
 | "rv_nb_transits" | Number of transits | n/a |
 | "rv_expected_sig_to_noise" | Radial velocity expected signal to noise | n/a |
-| "ruwe" | Renormalised Unit Weight Error[^3] | km s$^{-1}$ |
+| "ruwe" | Renormalised Unit Weight Error[^3] | n/a |
 
 [^3]: See for example the DR2 ruwe info [here](https://gea.esac.esa.int/archive/documentation/GDR2/Gaia_archive/chap_datamodel/sec_dm_main_tables/ssec_dm_ruwe.html).
 
