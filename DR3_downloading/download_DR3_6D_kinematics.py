@@ -1,16 +1,12 @@
 #/usr/bin/env python
 """
-Purpose of file: Download a subset (set by command line argument) of the rows of GAIA DR3, for the columns containing spectroscopic information 
-suitable for parallelization via job submission system like slurm.
+Purpose of file: Download a subset (set by command line argument) of the rows of GAIA DR3, for the columns containing kinematic information 
+suitable for parallelization via job submission system like slurm. 
 
 Outputs:
-Writes the velocity data according to ADQL_base_script (defined in script)
+Writes the velocity data according to ADQL_base_script (defined in script). Default format for output files is csv.
 
 NOTES:
--   On precision: the string versions of the sky patch coordinate centers have a precision 10 
-    decimal places as is. If this is changed, the file handling will need to be adjusted.
-    (though download_patch.py will not need to be changed)
-
 -   On inspecting outputs: Check the number of lines (objects) via "wc -l -c filename" where you
     replace filename, but only works as expected for csv files. In general to check file size in a human
     readable format, type "du -sh filename" and in the output "K" is kilobytes, "M" is megabytes and so on.
