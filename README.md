@@ -110,14 +110,16 @@ Not all these directories are present in the repo, but would be necessary to rec
 1. "DR3_6D_kinematics_raw.csv"   
     This is velocity information from GAIA DR3 downloaded via the following ADQL script:  
   
-    ```SELECT  
+    ```
+    SELECT  
         source_id, ra, dec, l,b, parallax, parallax_error, pmra, pmra_error, pmdec, pmdec_error, 
         parallax_pmra_corr, parallax_pmdec_corr, pmra_pmdec_corr, ruwe, radial_velocity, 
         radial_velocity_error, rv_template_fe_h, parallax_over_error, phot_g_mean_mag,
         nu_eff_used_in_astrometry, pseudocolour, ecl_lat, astrometric_params_solved, 
         rv_nb_transits, rv_expected_sig_to_noise  
     FROM gaiadr3.gaia_source  
-    WHERE rv_nb_transits > 0 AND parallax/parallax_error > 5.0```  
+    WHERE rv_nb_transits > 0 AND parallax/parallax_error > 5.0
+    ```  
   
 2. "converting_code.py"  
     This code reads raw data from "DR3_6D_kinematics.csv" and creates a pandas "pickle" file
