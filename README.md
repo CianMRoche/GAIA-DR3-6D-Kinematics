@@ -2,7 +2,7 @@
 This repo contains the code for a download and processing pipeline whose output is a file with columns containing the 6D kinematics of GAIA's data release 3 (DR3). The full sample of stars with radial velocities is roughly 33 million stars, but some columns are included for making quality cuts which reduce the sample to something closer to 20 million stars. By default, the only quality cut which is pre-applied is that the (uncorrected) parallax over parallax error is greater than 5.
 
 ### Where to get the processed data
-Download available from `https://mitprod-my.sharepoint.com/:u:/g/personal/roche_mit_edu/EQZ9Y-_csntIkb-VO-PuZZQBP0xjH86xBLAJHxjsW3ZqOQ?e=iyZF15`
+Download available from [this link](https://mitprod-my.sharepoint.com/:u:/g/personal/roche_mit_edu/EQZ9Y-_csntIkb-VO-PuZZQBP0xjH86xBLAJHxjsW3ZqOQ?e=iyZF15)
   
 Comes in a "pickle" file format, readable by pandas via  
 ```
@@ -11,40 +11,58 @@ dataframe = pandas.read_pickle("filename")
 ```
 
 ### What information is available?
-In the file linked above, the following columns can be obtained via a line of python like `dataframe["v_radial"].values` :  
-  
+In the file linked above, the following columns can be obtained via a line of python like `dataframe["v_radial"].values`. Note that a column label such as "Q_err" or "Q_error" corresponds to the standard deviation of quantity Q. 
+
 **Basic**:  
-- Source IDs ("source_id")
-- Metallicity ("feH")
+| Column Name | Description | Units |
+| --- | --- | --- |
+| "source_id" | Source IDs | n/a |
+| "feH" | Metallicity | dex[^1] |
+
+[^1]: Unitless, logarithm base 10
 
 **Positions**:  
-- RA ("ra") and DEC ("dec")
-- Positions in galactic coordinates ("l","b")
-- Positions of stars in galactocentric Cartesian coordinates ("x","y","z")
-- Distance from galactic center ("r") and distance from the Sun ("r_helio")
-- Errors on those positions ("x_err","y_err","z_err","r_err")
-- Parallax with an applied zero point correction ("parallax") 
-    Calculations are done with this corrected value, introduces nans to many columns, strip with  
+| Column Name | Description | Units |
+| --- | --- | --- |
+| "ra", "dec" | Right ascension, Declination | deg |
+| "l", "b" | Star positions in galactic coordinates | deg |
+| "x", "y", "z" | Star positions in galactocentric Cartesian coordinates | kpc |
+| "x_err", "y_err", "z_err" | Errors on the above positions | kpc |
+| "r" | Distance from galactic center | kpc |
+| "r_helio" | Distance from Sun | kpc |
+| "parallax_nozpcorr" | Parallax without zero point correction | mas |
+| "parallax" | Parallax with an applied zero point correction[^2] | mas |
+| "plx_over_error" | Parallax (corrected) over error | deg |
+
+[^2]: Calculations are done with this corrected value, introduces nans to many columns, strip with  
     `dataframe = pandas.read_pickle("/DR3_6D_kinematics.pkl")`  
     `dataframe = dataframe[numpy.isfinite(df["parallax"])]`  
     Correction package here: https://pypi.org/project/gaiadr3-zeropoint/
-- Parallax without zero point correction ("parallax_nozpcorr")
-- Parallax over error ("plx_over_error")
 
 **Velocities**  
-- Proper motion in RA ("pmra") and DEC ("pmdec") and associated errors ("pmra_err", "pmdec_err")
-- Velocities of the stars in galactocentric cartesian coordinates ("vx","vy","vz") and their errors ("vx_err",...)
-- Velocities of the stars in galactocentric spherical coordinates ("vr","vtheta","vphi") and their errors ("vr_err",...)
-- Radial velocity ("v_radial") and associated error ("v_radial_error")
-- Speed ("vabs") and associated properly propagated error ("vabs_error")
-- Speed error without covariances taken into account for errors ("vabs_error_nocov")
+| Column Name | Description | Units |
+| --- | --- | --- |
+| "pmra", "pmdec" | Proper motion in RA and DEC | mas yr$^{-1}$ |
+| "pmra_err", "pmdec_err" | Errors on proper motions in RA and DEC | mas yr$^{-1}$ |
+| "vx","vy","vz" | Velocities of the stars in galactocentric cartesian coordinates | km s$^{-1}$ |
+| "vx_err", "vy_err", "vz_err" | Errors on the above velocities | km s$^{-1}$ |
+| "vr","vtheta","vphi" | Velocities of the stars in galactocentric spherical coordinates | km s$^{-1}$ |
+| "vr_err", "vtheta_err", "vphi_err" | Errors on the above velocities | km s$^{-1}$ |
+| "v_radial" | Radial velocity as observed by GAIA | km s$^{-1}$ |
+| "v_radial_error" | Associated error | km s$^{-1}$ |
+| "vabs" | Speed of star | km s$^{-1}$ |
+| "vabs_error" | Speed errors | km s$^{-1}$ |
+| "vabs_error_nocov" | Speed error without covariances taken into account | km s$^{-1}$ |
+
 
 **quality cuts**  
-- Number of transits ("rv_nb_transits")
-- Radial velocity signal to noise ("rv_expected_sig_to_noise")
-- RUWE ("ruwe") see for example https://gea.esac.esa.int/archive/documentation/GDR2/Gaia_archive/chap_datamodel/sec_dm_main_tables/ssec_dm_ruwe.html
+| Column Name | Description | Units |
+| --- | --- | --- |
+| "rv_nb_transits" | Number of transits | n/a |
+| "rv_expected_sig_to_noise" | Radial velocity expected signal to noise | n/a |
+| "ruwe" | Renormalised Unit Weight Error[^3] | km s$^{-1}$ |
 
-
+[^3]: See for example the DR2 ruwe info [here](https://gea.esac.esa.int/archive/documentation/GDR2/Gaia_archive/chap_datamodel/sec_dm_main_tables/ssec_dm_ruwe.html).
 
 ### Directory Structure
 Not all these directories are present in the repo, but would be necessary to recreate entirely the data pipeline. They are listed here for completeness.
