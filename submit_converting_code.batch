@@ -1,0 +1,22 @@
+#!/bin/bash
+#SBATCH --job-name=converting_DR3
+#SBATCH --ntasks=1
+#SBATCH --mail-type=begin
+#SBATCH --mail-type=end
+#SBATCH --mail-user=roche@mit.edu
+#SBATCH --array=0-29
+#SBATCH --output=./submitted_job_outputs/converting_DR3_%a.txt
+#SBATCH --time=24:00:00
+#SBATCH --mem-per-cpu=32GB
+
+# -------- Load Environment --------
+cd /home/submit/roche/miniconda3/envs/py3/bin
+source activate py3
+
+# -------- Go to directory with scripts -----
+cd /data/submit/gaia/dr3/kinematics/6D_kinematics/
+
+
+# -------- Save input parameters
+python3 converting_code.py $SLURM_ARRAY_TASK_ID
+

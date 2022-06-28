@@ -1,0 +1,23 @@
+#!/bin/bash
+#SBATCH --job-name=download_DR3_6D_kinematics
+#SBATCH --ntasks=1
+#SBATCH --array=0,8,16,24
+#SBATCH --mail-type=begin
+#SBATCH --mail-type=end
+#SBATCH --mail-user=roche@mit.edu
+#SBATCH --output=../submitted_job_outputs/download_DR3_6D_kinematics_%a.txt
+#SBATCH --time=6:00:00
+#SBATCH --mem-per-cpu=24GB
+
+
+# -------- Load Environment --------
+cd /home/submit/roche/miniconda3/envs/py3/bin
+source activate py3
+
+
+# -------- Go to directory with scripts --------
+cd /work/submit/roche/DR3_hackathon/Gaia-Data-Aquisition/download_scripts
+
+
+# -------- Get data -------- 
+python3 download_DR3_6D_kinematics.py $SLURM_ARRAY_TASK_ID 
