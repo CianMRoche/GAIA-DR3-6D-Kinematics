@@ -1,4 +1,7 @@
-# Where to get the data
+# GAIA DR3 6D Kinematics
+This repo contains the code for a download and processing pipeline whose output is a file with columns containing the 6D kinematics of GAIA's data release 3 (DR3). The full sample of stars with radial velocities is roughly 33 million stars, but some columns are included for making quality cuts which reduce the sample to something closer to 20 million stars. By default, the only quality cut which is pre-applied is that the (uncorrected) parallax over parallax error is greater than 5.
+
+# Where to get the processed data
 Download available from `https://mitprod-my.sharepoint.com/:u:/g/personal/roche_mit_edu/EQZ9Y-_csntIkb-VO-PuZZQBP0xjH86xBLAJHxjsW3ZqOQ?e=iyZF15`
   
 Comes in a "pickle" file format, readable by pandas via  
@@ -8,6 +11,7 @@ dataframe = pandas.read_pickle("filename")
 ```
 
 # Directory Structure
+Not all these directories are present in the repo, but would be necessary to recreate entirely the data pipeline. They are listed here for completeness.
 ```
 .
 └── DR3_downloading/
