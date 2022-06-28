@@ -1,3 +1,12 @@
+# Where to get the data
+Download available from `https://mitprod-my.sharepoint.com/:u:/g/personal/roche_mit_edu/EQZ9Y-_csntIkb-VO-PuZZQBP0xjH86xBLAJHxjsW3ZqOQ?e=iyZF15`
+  
+Comes in a "pickle" file format, readable by pandas via  
+```
+import pandas
+dataframe = pandas.read_pickle("filename")
+```
+
 # Directory Structure
 ```
 .
