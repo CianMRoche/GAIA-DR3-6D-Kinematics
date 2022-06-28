@@ -1,7 +1,7 @@
 # GAIA DR3 6D Kinematics
 This repo contains the code for a download and processing pipeline whose output is a file with columns containing the 6D kinematics of GAIA's data release 3 (DR3). The full sample of stars with radial velocities is roughly 33 million stars, but some columns are included for making quality cuts which reduce the sample to something closer to 20 million stars. By default, the only quality cut which is pre-applied is that the (uncorrected) parallax over parallax error is greater than 5.
 
-# Where to get the processed data
+### Where to get the processed data
 Download available from `https://mitprod-my.sharepoint.com/:u:/g/personal/roche_mit_edu/EQZ9Y-_csntIkb-VO-PuZZQBP0xjH86xBLAJHxjsW3ZqOQ?e=iyZF15`
   
 Comes in a "pickle" file format, readable by pandas via  
@@ -10,7 +10,43 @@ import pandas
 dataframe = pandas.read_pickle("filename")
 ```
 
-# Directory Structure
+### What information is available?
+In the file linked above, the following columns can be obtained via a line of python like `dataframe["v_radial"].values` :  
+  
+**Basic**:  
+- Source IDs ("source_id")
+- Metallicity ("feH")
+
+**Positions**:  
+- RA ("ra") and DEC ("dec")
+- Positions in galactic coordinates ("l","b")
+- Positions of stars in galactocentric Cartesian coordinates ("x","y","z")
+- Distance from galactic center ("r") and distance from the Sun ("r_helio")
+- Errors on those positions ("x_err","y_err","z_err","r_err")
+- Parallax with an applied zero point correction ("parallax") 
+    Calculations are done with this corrected value, introduces nans to many columns, strip with  
+    `dataframe = pandas.read_pickle("/DR3_6D_kinematics.pkl")`  
+    `dataframe = dataframe[numpy.isfinite(df["parallax"])]`  
+    Correction package here: https://pypi.org/project/gaiadr3-zeropoint/
+- Parallax without zero point correction ("parallax_nozpcorr")
+- Parallax over error ("plx_over_error")
+
+**Velocities**  
+- Proper motion in RA ("pmra") and DEC ("pmdec") and associated errors ("pmra_err", "pmdec_err")
+- Velocities of the stars in galactocentric cartesian coordinates ("vx","vy","vz") and their errors ("vx_err",...)
+- Velocities of the stars in galactocentric spherical coordinates ("vr","vtheta","vphi") and their errors ("vr_err",...)
+- Radial velocity ("v_radial") and associated error ("v_radial_error")
+- Speed ("vabs") and associated properly propagated error ("vabs_error")
+- Speed error without covariances taken into account for errors ("vabs_error_nocov")
+
+**quality cuts**  
+- Number of transits ("rv_nb_transits")
+- Radial velocity signal to noise ("rv_expected_sig_to_noise")
+- RUWE ("ruwe") see for example https://gea.esac.esa.int/archive/documentation/GDR2/Gaia_archive/chap_datamodel/sec_dm_main_tables/ssec_dm_ruwe.html
+
+
+
+### Directory Structure
 Not all these directories are present in the repo, but would be necessary to recreate entirely the data pipeline. They are listed here for completeness.
 ```
 .
@@ -33,7 +69,7 @@ Not all these directories are present in the repo, but would be necessary to rec
 └── README.md
 ```
 
-# The subfolders in this folder are as follows:
+### The subfolders in this folder are as follows:
 
 1. "DR3_downloading"  
     Script to download 6D kinematic data from GAIA DR3 and a parallel submission script so it doesnt hit download limits
@@ -67,40 +103,9 @@ Not all these directories are present in the repo, but would be necessary to rec
   
 2. "converting_code.py"  
     This code reads raw data from "DR3_6D_kinematics.csv" and creates a pandas "pickle" file
-    with the following columns:  
+    with the columns outined above.  
     
-    Basic:  
-    - Source IDs ("source_id")
-
-    Positions:  
-    - RA ("ra") and DEC ("dec")
-    - Positions in galactic coordinates ("l","b")
-    - Positions of stars in galactocentric Cartesian coordinates ("x","y","z")
-    - Distance from galactic center ("r") and distance from the Sun ("r_helio")
-    - Errors on those positions ("x_err","y_err","z_err","r_err")
-    - Parallax with an applied zero point correction ("parallax") 
-        Calculations are done with this corrected value, introduces nans to many columns, strip with  
-        dataframe = pandas.read_pickle("/DR3_6D_kinematics.pkl")
-        dataframe = dataframe[numpy.isfinite(df["parallax"])] 
-        Correction package here: https://pypi.org/project/gaiadr3-zeropoint/
-    - Parallax without zero point correction ("parallax_nozpcorr")
-    - Parallax over error ("plx_over_error")
-
-    Velocities  
-    - Proper motion in RA ("pmra") and DEC ("pmdec") and associated errors ("pmra_err", "pmdec_err")
-    - Velocities of the stars in galactocentric cartesian coordinates ("vx","vy","vz") and their errors ("vx_err",...)
-    - Velocities of the stars in galactocentric spherical coordinates ("vr","vtheta","vphi") and their errors ("vr_err",...)
-    - Radial velocity ("v_radial") and associated error ("v_radial_error")
-    - Speed ("vabs") and associated properly propagated error ("vabs_error")
-    - Speed error without covariances taken into account for errors ("vabs_error_nocov")
-
-    Misc / quality cuts  
-    - Metallicity ("feH")
-    - Number of transits ("rv_nb_transits")
-    - Radial velocity signal to noise ("rv_expected_sig_to_noise")
-    - RUWE ("ruwe") see for example https://gea.esac.esa.int/archive/documentation/GDR2/Gaia_archive/chap_datamodel/sec_dm_main_tables/ssec_dm_ruwe.html
-
-
+    
 3. "submit_converting_code.batch"  
     Parallel submission script for converting_code, to improve speed of conversion. Requires editing to be used on a different cluster and for different users
 
