@@ -1,8 +1,8 @@
 # GAIA DR3 6D Kinematics
 This repo contains the code for a download and processing pipeline whose output is a file with columns containing the 6D kinematics of GAIA's data release 3 (DR3). The full sample of stars with radial velocities is roughly 33 million stars, but some columns are included for making quality cuts which reduce the sample to something closer to 20 million stars. By default, the only quality cut which is pre-applied is that the (uncorrected) parallax over parallax error is greater than 5.
 
-### Where to get the processed data
-Download available from [this link](https://mitprod-my.sharepoint.com/:u:/g/personal/roche_mit_edu/EQZ9Y-_csntIkb-VO-PuZZQBP0xjH86xBLAJHxjsW3ZqOQ?e=iyZF15)
+## Where to get the processed data
+Download available from [this link](https://mitprod-my.sharepoint.com/:u:/g/personal/roche_mit_edu/EQZ9Y-_csntIkb-VO-PuZZQBP0xjH86xBLAJHxjsW3ZqOQ?e=iyZF15).
   
 Comes in a "pickle" file format, readable by pandas via  
 ```
@@ -10,14 +10,14 @@ import pandas
 dataframe = pandas.read_pickle("filename")
 ```
 
-### What information is available?
+## What information is available?
 In the file linked above, the following columns can be obtained via a line of python like `dataframe["v_radial"].values`. Note that a column label such as "Q_err" or "Q_error" corresponds to the standard deviation of quantity Q. 
 
 **Basic**:  
 | Column Name | Description | Units |
 | --- | --- | --- |
-| "source_id" | Source IDs | n/a |
-| "feH" | Metallicity | dex[^1] |
+| "source_id" | GAIA DR3 source IDs | n/a |
+| "feH" | Metallicity, "rv_template_fe_h" in DR3 gaia_source | dex[^1] |
 
 [^1]: Unitless, logarithm base 10
 
@@ -32,14 +32,14 @@ In the file linked above, the following columns can be obtained via a line of py
 | "r_helio" | Distance from Sun | kpc |
 | "parallax_nozpcorr" | Parallax without zero point correction | mas |
 | "parallax" | Parallax with an applied zero point correction[^2] | mas |
-| "plx_over_error" | Parallax (corrected) over error | deg |
+| "plx_over_error" | Parallax (corrected) over error | n/a |
 
 [^2]: Calculations are done with this corrected value, introduces nans to many columns, strip with  
     `dataframe = pandas.read_pickle("/DR3_6D_kinematics.pkl")`  
     `dataframe = dataframe[numpy.isfinite(df["parallax"])]`  
-    Correction package here: https://pypi.org/project/gaiadr3-zeropoint/
+    Correction package [here](https://pypi.org/project/gaiadr3-zeropoint/).
 
-**Velocities**  
+**Velocities**:  
 | Column Name | Description | Units |
 | --- | --- | --- |
 | "pmra", "pmdec" | Proper motion in RA and DEC | mas yr$^{-1}$ |
@@ -55,7 +55,7 @@ In the file linked above, the following columns can be obtained via a line of py
 | "vabs_error_nocov" | Speed error without covariances taken into account | km s$^{-1}$ |
 
 
-**quality cuts**  
+**Quality cuts**:   
 | Column Name | Description | Units |
 | --- | --- | --- |
 | "rv_nb_transits" | Number of transits | n/a |
@@ -64,7 +64,7 @@ In the file linked above, the following columns can be obtained via a line of py
 
 [^3]: See for example the DR2 ruwe info [here](https://gea.esac.esa.int/archive/documentation/GDR2/Gaia_archive/chap_datamodel/sec_dm_main_tables/ssec_dm_ruwe.html).
 
-### Directory Structure
+## Directory Structure
 Not all these directories are present in the repo, but would be necessary to recreate entirely the data pipeline. They are listed here for completeness.
 ```
 .
@@ -87,7 +87,7 @@ Not all these directories are present in the repo, but would be necessary to rec
 └── README.md
 ```
 
-### The subfolders in this folder are as follows:
+## The subfolders in this folder are as follows:
 
 1. "DR3_downloading"  
     Script to download 6D kinematic data from GAIA DR3 and a parallel submission script so it doesnt hit download limits
@@ -105,7 +105,7 @@ Not all these directories are present in the repo, but would be necessary to rec
     Output files from the parallel data conversion from submit_converting_code.batch and submit_concatenate_dataframes.batch
   
   
-# The files in this folder are as follows:   
+## The files in this folder are as follows:   
 
 1. "DR3_6D_kinematics_raw.csv"   
     This is velocity information from GAIA DR3 downloaded via the following ADQL script:  
