@@ -187,7 +187,7 @@ print('Calculating vx, vy, vz...')
 
 # CHECK NUMBERS
 # factor = 4.74  # *1e-3 factor off here
-factor = 4.74047
+factor = 4.74047  # 1 mas yr^{−1} at 1 kpc to 1 kms^{−1}
 print('Using factor = %.5f' % factor)
 
 
