@@ -1,5 +1,5 @@
 #####################################################
-# Based on code from Lina Necib 2018 
+# Based on code from Lina Necib 2018 - outputs a .pkl file containing Gaia 6D kinematics in useful coordinate systems, with uncertainties
 # Parallelized via submit_coordinate_convert.batch
 # Executes 1 million rows at a time by default
 #
@@ -325,7 +325,7 @@ r = radial_dis
 phi = np.arctan2(y, x)
 theta = np.arccos(z / r)
 
-r_helio = np.linalg.norm(np.transpose([x + rSun, y, z]), axis=1)
+r_helio = np.linalg.norm(np.transpose([x - rSun, y, z]), axis=1) # had a bug where that was a + sign, unused column typically but should be fixed now
 print('r_helio min, max = %.1f, %.1f kpc' % (np.min(r_helio), np.max(r_helio)))
 
 # Velocities
