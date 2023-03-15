@@ -4,19 +4,19 @@
 #SBATCH --array=0,8,16,24
 #SBATCH --mail-type=begin
 #SBATCH --mail-type=end
-#SBATCH --mail-user=roche@mit.edu
-#SBATCH --output=../submitted_job_outputs/download_DR3_6D_kinematics_%a.txt
+#SBATCH --mail-user=YOUR_EMAIL
+#SBATCH --output=YOUR_OUTPUT_FOLDER/download_DR3_6D_kinematics_%a.txt
 #SBATCH --time=6:00:00
 #SBATCH --mem-per-cpu=24GB
 
-
 # -------- Load Environment --------
-cd /home/submit/roche/miniconda3/envs/py3/bin
-source activate py3
+# for anaconda or miniconda envs, cd to the conda/envs/NAME_OF_ENVIRONMENT/bin folder
+cd YOUR_USER_FOLDER/miniconda3(or anaconda)/envs/NAME_OF_ENVIRONMENT/bin
+source activate NAME_OF_ENVIRONMENT
 
 
 # -------- Go to directory with scripts --------
-cd /work/submit/roche/DR3_hackathon/Gaia-Data-Aquisition/download_scripts
+cd PATH_TO_WORKING_DIRECTORY/DR3_downloading
 
 
 # -------- Get data -------- 
