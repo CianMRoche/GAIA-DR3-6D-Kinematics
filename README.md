@@ -29,6 +29,7 @@ In the file linked above, the following columns can be obtained via a line of py
 | "x", "y", "z" | Star positions in galactocentric Cartesian coordinates | kpc |
 | "x_err", "y_err", "z_err" | Errors on the above positions | kpc |
 | "r" | Distance from galactic center | kpc |
+| "r_err" | Error on distance from galactic center | kpc |
 | "r_helio" | Distance from Sun **: correct in script, WRONG in data file linked above** | kpc |
 | "parallax_nozpcorr" | Parallax without zero point correction | mas |
 | "parallax" | Parallax with an applied zero point correction[^2] | mas |
