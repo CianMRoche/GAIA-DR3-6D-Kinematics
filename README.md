@@ -2,7 +2,7 @@
 This repo contains the code for a download and processing pipeline whose output is a file with columns containing the 6D kinematics of GAIA's data release 3 (DR3). The full sample of stars with radial velocities is roughly 33 million stars, but some columns are included for making quality cuts which reduce the sample to something closer to 20 million stars. By default, the only quality cut which is pre-applied is that the (uncorrected) parallax over parallax error is greater than 5.
 
 ## Where to get the processed data
-Download available from [this link](https://mitprod-my.sharepoint.com/:u:/g/personal/roche_mit_edu/EQZ9Y-_csntIkb-VO-PuZZQBP0xjH86xBLAJHxjsW3ZqOQ?e=iyZF15).
+Download of the full data available from [this link](https://mitprod-my.sharepoint.com/:u:/g/personal/roche_mit_edu/EQZ9Y-_csntIkb-VO-PuZZQBP0xjH86xBLAJHxjsW3ZqOQ?e=pn1nRG).
   
 Comes in a "pickle" file format, readable by pandas via  
 ```
@@ -30,7 +30,7 @@ In the file linked above, the following columns can be obtained via a line of py
 | "x_err", "y_err", "z_err" | Errors on the above positions | kpc |
 | "r" | Distance from galactic center | kpc |
 | "r_err" | Error on distance from galactic center | kpc |
-| "r_helio" | Distance from Sun **: correct in script, WRONG in data file linked above** | kpc |
+| "r_helio" | Distance from Sun | kpc |
 | "parallax_nozpcorr" | Parallax without zero point correction | mas |
 | "parallax" | Parallax with an applied zero point correction[^2] | mas |
 | "plx_over_error" | Parallax (corrected) over error | n/a |
